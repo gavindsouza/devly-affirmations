@@ -1,0 +1,41 @@
+body {
+    background-color: lightblue;
+    height: 100%;
+}
+.affirmation-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100px;
+    overflow: hidden;
+}
+.affirmation-quote {
+    font-size: 4em;
+}
+.affirmation-author {
+    font-size: 2em;
+}
+body {
+    background-color: #ffcfdf;
+    background-image: linear-gradient(315deg, #ffcfdf 0%, #b0f3f1 74%);
+}
+
+.navbar-brand, .nav-link {
+    color: white !important;
+    font-size: 20px;
+}
+
+button {
+    color: #60d2ce;
+    background-color: white;
+    border: 2px solid #b0f3f1;
+}
+
+.btn-affirm:hover {
+    color: #b0f3f1;
+}
+
+.affirmation {
+    color: white;
+    padding: 1rem;
+}

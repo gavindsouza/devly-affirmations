@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="name" content="Devly Affirmations">
+      <meta name="title" content="Devly Affirmations">
+      <meta property="og:title" content="Devly Affirmations">
+      <meta name="language" content="en-US">
+      <title>Devly Affirmations</title>
+      <link rel="stylesheet" href="/static/assets.css">
+   </head>
+   <body>
+      <div id="affirmation-app">
+          <div class="affirmation-block">
+            <div class="affirmation-quote" v-if="affirmation">✨ {{ affirmation }} ✨</div>
+            <div class="affirmation-author" v-if="author">{{ author }}</div>
+            <button v-on:click="getAffirmed">I want to be affirmed</button>
+        </div>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+      <script>
+         let app = new Vue({
+            el: '#affirmation-app',
+            data: {
+              affirmation: null,
+              author: null,
+            },
+            methods: {
+               getAffirmed: function() {
+                    fetch("/").then(
+                        response => response.json()
+                    ).then(response => {
+                        this.affirmation = response.affirmation;
+                        this.author = response.author;
+                    }).catch(error => {
+                        console.log(`An error occurred while getting affirmed: '${error}'`);
+                    });
+               }
+            }
+          })
+      </script>
+</html>
