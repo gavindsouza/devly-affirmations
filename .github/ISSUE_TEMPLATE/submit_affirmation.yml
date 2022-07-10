@@ -1,0 +1,19 @@
+name: Affirmation Form
+description: Submit an affirmation for your developer besties
+title: "[affirm]: <title>"
+labels: ["affirmation"]
+body:
+  - type: textarea
+    id: affirmation
+    attributes:
+      label: Affirmative Quote
+      placeholder: I will affirm me and my fellow brethren today
+    validations:
+      required: true
+  - type: input
+    id: author
+    attributes:
+      label: Author Email / GitHub ID
+      placeholder: author@email.com
+    validations:
+      required: true
