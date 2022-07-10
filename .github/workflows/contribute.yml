@@ -16,7 +16,7 @@ jobs:
       - name: Check if authorized member has approved affirmation
         run: |
           pip install requests
-          python ${GITHUB_WORKSPACE}/.github/helper/approval.py $ISSUE_NUMBER
+          python ${GITHUB_WORKSPACE}/.github/helper/approval.py
         env:
             ISSUE_NUMBER: ${{ github.event.issue.number }}
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
