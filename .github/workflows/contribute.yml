@@ -39,10 +39,9 @@ jobs:
       - name: Commit + Push changes
         uses: EndBug/add-and-commit@v9
         with:
-          author_name: ${{ fromJson(steps.issue-parser.outputs.jsonString).author }}
-          author_email: ${{ fromJson(steps.issue-parser.outputs.jsonString).author }}
+          author_name: ${{ fromJson(steps.issue-parser.outputs).author }}
+          author_email: ${{ fromJson(steps.issue-parser.outputs).author }}
           message: 'feat: Affirmation submission via Issue'
-          cwd: ${GITHUB_WORKSPACE}
 
   cleanup:
     name: Close Issue thread after successful contribution

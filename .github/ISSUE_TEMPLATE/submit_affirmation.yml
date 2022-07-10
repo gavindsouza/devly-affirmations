@@ -6,14 +6,14 @@ body:
   - type: textarea
     id: affirmation
     attributes:
-      label: Affirmative Quote
+      label: Affirmation
       placeholder: I will affirm me and my fellow brethren today
     validations:
       required: true
   - type: input
     id: author
     attributes:
-      label: Author Email / GitHub ID
+      label: Author
       placeholder: author@email.com
     validations:
       required: true

@@ -13,3 +13,4 @@ if __name__ == "__main__":
     # update affirmations file
     with open(AFFIRMATIONS_FILE, "w") as f:
         f.write(json.dumps(EXISTING_AFFIRMATIONS, indent=1))
+    print(f"Updated {AFFIRMATIONS_FILE} with {USER_SUBMISSION}")
