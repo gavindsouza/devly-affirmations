@@ -1,0 +1,49 @@
+name: Submit Affirmation via Issues
+on:
+  issue_comment:
+
+jobs:
+  approval:
+    # this job only runs for issue comments
+    if: ${{ github.event.issue.number }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+      - name: Check if authorized member has approved affirmation
+        run: |
+          python -m pip install requests --quiet
+          python $GITHUB_WORKSPACE/.github/helper/approval.py $ISSUE_NUMBER
+        env:
+            ISSUE_NUMBER: ${{ github.event.issue.number }}
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  contribution:
+    # Fetch affirmation from issue and make a commit to default branch
+    needs: approval
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+      - uses: stefanbuck/github-issue-parser@v2
+        id: issue-parser
+        with:
+          template-path: $GITHUB_WORKSPACE/.github/ISSUE_TEMPLATE/submit_affirmation.yml
+      - name: Update affirmations file
+        run: python $GITHUB_WORKSPACE/.github/helper/update.py '${{ steps.issue-parser.outputs.jsonString }}'
+      - name: Commit + Push changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: ${{ fromJson(steps.issue-parser.outputs.jsonString).author }}
+          author_email: ${{ fromJson(steps.issue-parser.outputs.jsonString).author }}
+          message: 'feat: Affirmation submission via Issue'
+          cwd: $GITHUB_WORKSPACE
+
+  cleanup:
+    # Close current issue thread
+    needs: contribution
+    steps:
+      - run: echo "We're all done now...Feel free to close this issue thread now :D"
+      - name: Close Issue
+        uses: peter-evans/close-issue@v2
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          comment: Auto-closing issue since commit has been pushed to main branch
