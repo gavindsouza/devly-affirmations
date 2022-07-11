@@ -2,10 +2,11 @@ import os
 import json
 import sys
 
-WORKSPACE = os.environ.get("GITHUB_WORKSPACE")
-AFFIRMATIONS_FILE = f"{WORKSPACE}/affirmations/affirmations.json"
 
 if __name__ == "__main__":
+    WORKSPACE = os.environ.get("GITHUB_WORKSPACE")
+    AFFIRMATIONS_FILE = f"{WORKSPACE}/affirmations/affirmations.json"
+
     EXISTING_AFFIRMATIONS: list[dict] = json.loads(open(AFFIRMATIONS_FILE).read())
     USER_SUBMISSION: dict = json.loads(sys.argv[-1])
     EXISTING_AFFIRMATIONS.append(USER_SUBMISSION)

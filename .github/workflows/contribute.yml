@@ -40,7 +40,7 @@ jobs:
           template-path: ${GITHUB_WORKSPACE}/.github/ISSUE_TEMPLATE/submit_affirmation.yml
 
       - name: Update affirmations file
-        run: python ${GITHUB_WORKSPACE}/.github/helper/update.py '${{ steps.issue-parser.outputs.jsonString }}'
+        run: python ${GITHUB_WORKSPACE}/.github/helper/update.py ${{ steps.issue-parser.outputs.jsonString }}
 
       - name: Commit + Push changes
         uses: EndBug/add-and-commit@v9
