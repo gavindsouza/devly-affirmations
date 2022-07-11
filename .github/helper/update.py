@@ -8,7 +8,7 @@ if __name__ == "__main__":
     AFFIRMATIONS_FILE = f"{WORKSPACE}/affirmations/affirmations.json"
 
     EXISTING_AFFIRMATIONS: list[dict] = json.loads(open(AFFIRMATIONS_FILE).read())
-    USER_SUBMISSION: dict = json.loads(sys.argv[-1])
+    USER_SUBMISSION: dict = json.loads(os.environ.get("affirmation") or"{}")
     EXISTING_AFFIRMATIONS.append(USER_SUBMISSION)
 
     # update affirmations file
