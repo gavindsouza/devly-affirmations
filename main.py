@@ -1,14 +1,10 @@
 import json
 import os
 import random
-from typing import Dict, List
 
-from fastapi import FastAPI
-from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
+from flask import Flask
 
-app = FastAPI()
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app = Flask(__name__)
 
 
 def get_file_path(*path):
@@ -16,26 +12,14 @@ def get_file_path(*path):
 
 
 with open(get_file_path("affirmations", "affirmations.json")) as f:
-    affirmation_list: List = json.loads(f.read())
-
-with open(get_file_path("static", "page.html")) as f:
-    html_content: str = f.read()
-
-
-async def fetch_page_content() -> str:
-    affirmation = random.choice(affirmation_list)
-    author, quote = affirmation["author"], affirmation["affirmation"]
-
-    return html_content.replace(
-        "affirmation: null,", f"affirmation: '{quote}',"
-    ).replace("author: null,", f"author: '{author}',")
+    affirmation_list: list = json.loads(f.read())
 
 
 @app.get("/")
 @app.get("/author/{author}")
-async def quote(author: str = None) -> Dict:
+def quote(author: str = None) -> dict:
     if author:
-        author_list = list(filter(lambda x: x["author"] == author, affirmation_list))
+        author_list = [x for x in affirmation_list if x["author"] == author]
     else:
         author_list = affirmation_list
 
@@ -43,16 +27,10 @@ async def quote(author: str = None) -> Dict:
 
 
 @app.get("/quotes")
-async def all_quotes() -> List:
+def all_quotes() -> list:
     return affirmation_list
 
 
 @app.get("/authors")
-async def all_authors() -> List:
-    return set(x["author"] for x in affirmation_list)
-
-
-@app.get("/devly-affirmations", response_class=HTMLResponse)
-async def render_page():
-    html_content = await fetch_page_content()
-    return HTMLResponse(content=html_content)
+def all_authors() -> list:
+    return list({x["author"] for x in affirmation_list})
