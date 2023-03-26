@@ -130,5 +130,9 @@
  {
   "affirmation": "Tokens without expiration are a feature, not a bug",
   "author": "gavin18d@gmail.com"
+ },
+ {
+  "affirmation": "Using float over Decimal is a sane idea for building my Accounting System",
+  "author": "gavin18d@gmail.com"
  }
 ]
